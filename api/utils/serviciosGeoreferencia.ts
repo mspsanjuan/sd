@@ -7,7 +7,7 @@ import * as configPrivate from '../config.private';
  * @returns opciones
  */
 export async function autocompletar(texto) {
-    let pathGoogleApi = configPrivate.geocodingPaths.autocompletePart1 + texto + configPrivate.geocodingPaths.autocompletePart2 + configPrivate.geoKey;
+    let pathGoogleApi =  configPrivate.geocodingPaths.autocompletePart1 + texto + configPrivate.geocodingPaths.autocompletePart2 + configPrivate.geoKey;
     pathGoogleApi = formatear(pathGoogleApi);
 
     const [status, body] = await handleHttpRequest(pathGoogleApi);
