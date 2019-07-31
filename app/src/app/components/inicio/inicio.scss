@@ -1,0 +1,116 @@
+//
+// Variables
+$color-celeste: #039ac6;
+$color-violeta: #9B2A79;
+$color-rosa: #002B3A;
+$color-amarillo: #666600;
+$color-salmon: #E2917F;
+$color-coral: #ce803e;
+
+$andes-azul-oscuro: #002838;
+$andes-azul: #0070cc;
+$andes-azul-claro: #00A8E0;
+$andes-celeste: #84cef0;
+$andes-violeta: #982f98;
+$andes-magenta: #e3007e;
+$andes-verde: #00b9b1;
+$andes-verde-claro: #63c7b7;
+$andes-naranja: #ff4a1a;
+$andes-naranja-claro: #f4a03b;
+
+//
+// Clases
+.logo {
+    background-image: url('../../assets/img/logo-wide.svg');
+    background-size: contain;
+    background-repeat: no-repeat;
+    width: 60%;
+    max-width: 600px;
+    min-height: 100px;
+    display: inline-block;
+    margin-top: 3em;
+    margin-bottom: 3em;
+}
+
+.boton {
+    min-height: 266px;
+    padding: .5em;
+    color: white;
+    cursor: pointer;
+    transition: all .5s;
+    margin-top: 15px;
+    // Contenido
+    .icono {
+        font-size: 3em;
+    }
+    .titulo {
+        text-transform: uppercase;
+        font-size: 2em;
+        font-weight: 400;
+        line-height: .8em;
+        padding-bottom: 1em;
+    }
+    .subtitulo {
+        text-transform: uppercase;
+        font-size: 1.5em;
+        font-weight: 100;
+        line-height: 1em;
+        padding-bottom: 1em;
+    }
+    .detalle {
+        font-weight: 100;
+    }
+    // Colores
+    &.color-celeste {
+        background: $color-celeste;
+    }
+    &.color-celeste:hover {
+        background: darken($color-celeste, 20%);
+    }
+    &.color-violeta {
+        background: $color-violeta;
+    }
+    &.color-violeta:hover {
+        background: darken($color-violeta, 20%);
+    }
+    &.color-rosa {
+        background: $color-rosa;
+    }
+    &.color-rosa:hover {
+        background: darken($color-rosa, 10%);
+    }
+    &.color-amarillo {
+        background: $color-amarillo;
+    }
+    &.color-amarillo:hover {
+        background: darken($color-amarillo, 10%);
+    }
+    &.color-salmon {
+        background: $color-salmon;
+    }
+    &.color-salmon:hover {
+        background: darken($color-salmon, 10%);
+    }
+    &.color-verde-claro {
+        background: $andes-verde-claro;
+    }
+    &.color-verde-claro:hover {
+        background: darken($andes-verde-claro, 10%);
+    }
+    &.color-verde {
+        background: $andes-verde;
+    }
+    &.color-verde:hover {
+        background: darken($andes-verde, 10%);
+    }
+    &.andes-naranja-claro {
+        background: $andes-naranja-claro;
+    }
+    &.andes-naranja-claro:hover {
+        background: darken($andes-naranja-claro, 10%);
+    }
+}
+
+.andes-inicio > div {
+    
+}

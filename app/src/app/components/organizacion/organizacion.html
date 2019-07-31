@@ -1,0 +1,73 @@
+<section *ngIf="!showcreate">
+    <div class="row">
+        <div class="col h-100">
+            <plex-box type="primary">
+                <header>
+                    <div class="row">
+                        <div class="col">
+                            <plex-text [(ngModel)]="nombre" label="Nombre" name="nombre"
+                                placeholder="Ingresar nombre..." (change)="loadDatos()">
+                            </plex-text>
+                        </div>
+                        <div class="col mt-4">
+                            <plex-bool [(ngModel)]="soloNoActivo"
+                                label="Mostrar solo {{organizacionService.getEstado(false)}}" name="activo"
+                                (change)="loadDatos()">
+                            </plex-bool>
+                        </div>
+                        <div class="col d-flex justify-content-end mt-4">
+                            <plex-button type="success" label="Nueva Organización" (click)="nuevaOrganizacion()"
+                                *ngIf="checkAuth('create')"></plex-button>
+                        </div>
+                    </div>
+                    <table style="table-layout:fixed" class="table table-fixed">
+                        <thead>
+                            <tr>
+                                <th width="20%">Código Sisa</th>
+                                <th width="30%">Nombre</th>
+                                <th width="10%">Complejidad</th>
+                                <th width="10%">Estado</th>
+                                <th width="20%" class="text-center">Acciones</th>
+                            </tr>
+                        </thead>
+                    </table>
+                </header>
+                <table *ngIf="datos && datos.length" class="table table-fixed">
+                    <tbody>
+                        <tr class="hover" *ngFor="let organizacion of datos">
+                            <td width="20%">
+                                <ng-container *ngIf="organizacion.codigo && organizacion.codigo.sisa">
+                                    {{organizacion.codigo.sisa}}
+                                </ng-container>
+                            </td>
+                            <td width="30%">{{organizacion.nombre}}</td>
+                            <td width="10%" class="text-center">
+                                <p>{{organizacion.nivelComplejidad}}</p>
+                            </td>
+                            <td width="10%" class="text-center">
+                                <plex-badge *ngIf="organizacion.activo" type="success">
+                                    {{organizacionService.getEstado(organizacion)}} </plex-badge>
+                                <plex-badge *ngIf="!organizacion.activo" type="danger">
+                                    {{organizacionService.getEstado(organizacion)}} </plex-badge>
+                            </td>
+                            <td width="20%" class="text-center">
+                                <plex-button *ngIf="checkAuth('editBasico') || checkAuth('editCompleto')" type="primary"
+                                    label="Editar" (click)="onEdit(organizacion)"></plex-button>
+                                <plex-button *ngIf="checkAuth('sectores', organizacion.id)" type="primary"
+                                    label="Ver sectores" (click)="routeSectores(organizacion.id)"></plex-button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+                <plex-loader *ngIf="loader"></plex-loader>
+                <div *ngIf="finScroll" class="alert alert-warning">
+                    <p style="text-align: center;"> No se encontraron resultados </p>
+                </div>
+            </plex-box>
+        </div>
+    </div>
+</section>
+
+<!--Componente de Alta/Modificación-->
+<organizacion-create-update *ngIf="showcreate" [seleccion]="seleccion" (data)='onReturn($event)'>
+</organizacion-create-update>

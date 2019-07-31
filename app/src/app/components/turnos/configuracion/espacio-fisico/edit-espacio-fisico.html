@@ -1,0 +1,64 @@
+<plex-layout>
+    <plex-layout-main>
+        <form #formulario="ngForm">
+            <div class="row">
+                <div class="col-6">
+                    <plex-text [(ngModel)]="modelo.nombre" [required]="true" id="nombre" name="nombre" label="Nombre"
+                               placeholder="Ingrese el nombre del espacio físico" required>
+                    </plex-text>
+                </div>
+                <div class="col-6">
+                    <plex-text [(ngModel)]="modelo.descripcion" name="descripcion" label="Descripción" placeholder="Ingrese la descripción del espacio físico">
+                    </plex-text>
+                </div>
+
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <plex-select [(ngModel)]="modelo.edificio" placeholder="Seleccione .." [required]="true" name="edificio"
+                                 (getData)="loadEdificios($event)" label="Edificio" labelField="descripcion">
+                    </plex-select>
+                </div>
+                <div class="col-6">
+                    <plex-select [(ngModel)]="modelo.servicio" placeholder="Seleccione .." name="servicio" (getData)="loadServicios($event)"
+                                 label="Servicio" labelField="nombre">
+                    </plex-select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <plex-select [(ngModel)]="modelo.sector" name="sector" placeholder="Seleccione .." (getData)="loadSectores($event)"
+                                 label="Sector" labelField="nombre">
+                    </plex-select>
+                </div>
+                <div class="col-6">
+                    <plex-text [(ngModel)]="modelo.detalle" name="detalle" label="Detalle Ubicación">
+                    </plex-text>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <plex-select [(ngModel)]="modelo.estado" placeholder="Seleccione .." label="Estado actual" name="estado"
+                                 (getData)="loadEstados($event)"></plex-select>
+                </div>
+                <div class="col-6">
+                    <br>
+                    <plex-bool [(ngModel)]="modelo.activo" label="Activo" name="activo"></plex-bool>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-6">
+                    <plex-select [(ngModel)]="modelo.equipamiento" label="Agregar Equipamiento" name="equipamiento"
+                                 placeholder="Ingrese las iniciales para buscar.." [multiple]="true" labelField="term"
+                                 [closeAfterSelect]="true" (getData)="buscarEquipamiento($event)"></plex-select>
+                </div>
+            </div>
+        </form>
+
+    </plex-layout-main>
+    <plex-layout-footer>
+        <plex-button type="danger" label="Cancelar" position="left" (click)="onCancel()"></plex-button>
+
+        <plex-button type="success" label="Guardar" position="right" [validateForm]="formulario" (click)="guardar($event)"></plex-button>
+    </plex-layout-footer>
+</plex-layout>

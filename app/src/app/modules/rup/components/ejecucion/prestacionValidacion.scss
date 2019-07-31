@@ -1,0 +1,160 @@
+@import '../variables';
+
+// TODO: Crear paquete NPM con las fonts
+@media print {
+    @import '../../assets/font.css';
+
+    * {
+        -webkit-print-color-adjust: exact !important;
+        /* Chrome, Safari */
+        color-adjust: exact !important;
+        /*Firefox*/
+    }
+}
+
+.type.prestacion {
+    background-color: $solicitud;
+}
+
+.type.hallazgo,
+.type.situación {
+    background-color: $problema;
+}
+
+.type.trastorno {
+    background-color: $trastorno;
+}
+
+.type.procedimiento,
+.type.entidad.observable,
+.régimen\/tratamiento {
+    background-color: $procedimiento;
+}
+
+.type.solicitud {
+    background-color: $solicitud;
+}
+
+.type.producto {
+    background-color: $producto;
+}
+
+.type.elemento.de.registro {
+    background-color: $adjunto;
+}
+
+.bg-invert {
+    background-color: $invert !important;
+}
+
+.btn-orden {
+    height: 28px;
+    width: 28px;
+
+    i {
+        position: relative;
+        left: -3px;
+        top: -6px;
+    }
+}
+
+// Resetea algunas reglas de .badge
+.badge {
+    border: 1px solid;
+    padding: 3px;
+}
+
+.titulo-hallazgos~.titulo-hallazgos {
+    display: none;
+}
+
+.titulo-trastornos~.titulo-trastornos {
+    display: none;
+}
+
+.titulo-procedimientos~.titulo-procedimientos {
+    display: none;
+}
+
+.titulo-solicitudes~.titulo-solicitudes {
+    display: none;
+}
+
+.titulo-productos~.titulo-productos {
+    display: none;
+}
+
+.imprimir {
+    display: none;
+}
+
+.titulo-adjuntos~.titulo-adjuntos {
+    display: none;
+}
+
+.titulo-consulta {
+    font-weight: 400;
+    color: black;
+
+    .consulta {
+        color: $blue;
+    }
+}
+
+.diagnostico-principal,
+.primera-vez {
+    line-height: 36px;
+    vertical-align: middle;
+    display: inline-flex;
+
+    span {
+        margin-left: 10px;
+    }
+}
+
+.containterPrimeraVez {
+    position: relative;
+    top: -259px; 
+
+    .row{
+        padding-right: 0;
+    padding-left: 39px;
+    
+    }
+
+    .icon {
+        font-size: 28px;
+        color: #00A8E0;
+margin-left: 19px;
+        }
+
+
+    .titulo {
+        display: flex;
+        align-items: flex-start !important;
+        padding: 5px 0;    
+        text-transform: capitalize;
+
+        i,
+        strong {
+            color: #00A8E0;
+            font-weight: 400;
+        }
+
+        i {
+            font-size: 28px;
+        }
+
+        strong {
+            margin: auto;
+            margin-left: 5px;
+            font-size: 18px;
+        }
+
+        .contenido {
+            font-size: 24px;
+        }
+    }
+}
+
+

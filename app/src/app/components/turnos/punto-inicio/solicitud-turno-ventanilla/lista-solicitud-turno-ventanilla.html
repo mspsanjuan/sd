@@ -1,0 +1,65 @@
+<fieldset *ngIf="!showCargarSolicitud">
+    <legend>Solicitudes</legend>
+
+    <div class="row">
+        <div class="col-12">
+            <plex-button type="info" label="Cargar Solicitud nueva" (click)="formularioSolicitud()"></plex-button>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-12">
+            <ng-container *ngIf="solicitudesPrestaciones.length > 0; then lista else mensaje"></ng-container>
+            <ng-template #lista>
+                <!-- Lista de solicitudes -->
+                <table class="table table-striped  table-sm">
+                    <thead>
+                        <tr>
+                            <th>Fecha</th>
+                            <th>Prestación</th>
+                            <th>Equipo de Salud/Organización</th>
+                            <th></th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let prestacion of solicitudesPrestaciones">
+                            <td>
+                                {{ prestacion.solicitud.fecha | fecha }}
+                            </td>
+                            <td>
+                                {{ prestacion.solicitud.tipoPrestacion.term }}
+                            </td>
+                            <td>
+                                {{ prestacion.solicitud.profesional | profesional }} -
+                                {{ prestacion?.solicitud?.organizacion?.nombre }}
+                                <span class="text-danger"
+                                      *ngIf="prestacion.solicitud?.registros[0]?.valor?.solicitudPrestacion?.autocitado === true">(autocitado)</span>
+                            </td>
+                            <td class="text-center">
+                                <plex-button *ngIf="!prestacion.solicitud?.turno && (auth.organizacion.id === prestacion?.solicitud?.organizacion?.id)"
+                                             type="success" (click)="solicitudPrestacionDarTurno(prestacion)"
+                                             title="Dar Turno" icon="calendar-plus"></plex-button>
+                                <span *ngIf="prestacion.solicitud?.turno" class="badge badge-success">Turno Dado</span>
+                                <span
+                                      *ngIf="!prestacion.solicitud?.turno && (auth.organizacion.id !== prestacion?.solicitud?.organizacion?.id)">
+                                    <span
+                                          class="badge badge-info">{{prestacion.estados[prestacion.estados.length-1]?.tipo}}</span>
+                                </span>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </ng-template>
+
+            <!-- Mensaje -->
+            <ng-template #mensaje>
+                <i class="mdi mdi-information-outline"></i> No hay solicitudes pendientes
+                <hr>
+            </ng-template>
+        </div>
+    </div>
+
+</fieldset>
+<solicitud-turno-ventanilla *ngIf="showCargarSolicitud" [paciente]="paciente"
+                            (cerrarSolicitudVentanilla)="cerrarSolicitudVentanilla($event)">
+</solicitud-turno-ventanilla>

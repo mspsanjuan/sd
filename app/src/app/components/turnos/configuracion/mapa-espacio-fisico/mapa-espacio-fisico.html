@@ -1,0 +1,52 @@
+<fieldset>
+    <table *ngIf="espacioTable && espacioTable.length > 0" class="mapa-espacios table table-striped table-hover">
+        <tr class="header">
+            <td>Espacio Físico</td>
+            <td *ngFor="let header of headers" [colSpan]="header.colspan" class="text-center">
+                <small>{{header.hora}}</small>
+            </td>
+        </tr>
+
+        <tr class="hover" *ngFor="let espacio of matrix" class="">
+            <td>
+                <small
+                    title="{{espacio._value.servicio?.nombre + ' - ' + espacio._value.sector?.nombre + ' - ' + espacio._value.edificio?.descripcion}}"
+                    titlePosition="right">
+                    <strong>{{espacio._value.nombre}}</strong>
+                </small>
+                <br>
+                <small *ngIf="espacio.sector">{{espacio._value.sector.nombre}}</small>
+                <span *ngFor="let eq of espacio._value.equipamiento" class="badge badge-info">{{eq.term}}</span>
+            </td>
+
+            <td *ngFor="let agenda of espacio._items" (mouseenter)="showInfo(agenda?.id)" (mouseleave)="showInfo(false)"
+                [colSpan]="agenda?.colspan" class="text-white" [ngClass]="{'ocupado-planificacion': agenda.id && agenda._value && agenda._value.estado ==='planificacion', 
+                'disponible': agenda.id && agenda._value && agenda._value.estado !=='planificacion' && agenda._value.estado !=='pausada',
+                'ocupado': agenda.id && agenda._value && agenda._value.estado =='pausada'}"
+                (click)="seleccionarEspacio(espacio, agenda.disponible)">
+                <ng-container *ngIf="agenda && idInfoAgenda === agenda.id">
+                    <div class="info-agenda">
+                        <div class="texto-agenda">
+                            <b>{{agenda.horaInicio | date: 'HH:mm' }} a {{agenda.horaFin | date: 'HH:mm'}} hs</b>
+                            <br> {{agenda.prestaciones | enumerar:['term']}}
+                            &nbsp;<span>({{agenda._value.estado}})</span>
+                            <br>
+                            <small *ngIf="agenda.profesionales?.length > 0">
+                                <b>Prof:</b> {{agenda.profesionales | enumerar:['apellido', 'nombre']}}</small>
+                        </div>
+                        <div class="tip"></div>
+                    </div>
+                    <div class="tip-border"></div>
+                </ng-container>
+                <div class="ml-0 mr-0 text-center" (click)="seleccionarAgenda(agenda)" *ngIf="agenda.id">
+                    <div class="mdi mdi-information mdi-24px"></div>
+                </div>
+            </td>
+        </tr>
+    </table>
+    <div class="row" *ngIf="showBotonCancelar">
+        <div class="col">
+            <plex-button type="info" label="Cerrar Mapa" (click)="cerrarMapa($event)"></plex-button>
+        </div>
+    </div>
+</fieldset>

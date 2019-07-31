@@ -1,0 +1,25 @@
+<!--Filtros-->
+<fieldset>
+    <legend>Mapa de Espacio Físico</legend>
+    <div class="alert alert-default small">
+        <div class="row">
+            <div class="col-12">
+                <h4>
+                    <p>Haga click en el área verde para asignar el espacio físico.</p>
+                </h4>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-4">
+            <plex-text label="Espacio físico" [(ngModel)]="agenda.espacioFisico" (change)="nombreChange($event)"></plex-text>
+        </div>
+
+        <div class="col-4">
+            <plex-select [(ngModel)]="agenda.equipamiento" label="Equipamiento" name="agenda.equipamiento" (getData)="loadEquipamientos($event)"
+                [multiple]="true" labelField="term" (change)="nombreChange($event)">
+            </plex-select>
+        </div>
+    </div>
+</fieldset>

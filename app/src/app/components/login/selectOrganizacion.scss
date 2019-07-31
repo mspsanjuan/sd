@@ -1,0 +1,10 @@
+.boton {
+    padding: .5em;
+    color: white;
+    cursor: pointer;
+    transition: all .5s;
+    background: #002B3A;
+    &:hover {
+        background: darken(#002B3A, 10%);
+    }
+}
