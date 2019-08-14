@@ -38,18 +38,20 @@ export async function getResumenDiarioMensual(params: any) {
         {
             $unwind: {
                 path: '$bloques'
-            }
+            },
         },
         {
             $unwind: {
-                path: '$bloques.turnos'
+                path: '$bloques.turnos',
+
             }
+
         },
         {
             $match: {
                 'bloques.turnos.estado': 'asignado',
+                'bloques.turnos.asistencia': 'asistio',
 
-                'bloques.turnos.asistencia': 'asistio'
             }
         },
         {
@@ -216,7 +218,7 @@ function formatData(data: any, anio: number, mes: number) {
 
             reg.total.m = sumarTotal(currData, 'masculino');
             reg.total.f = sumarTotal(currData, 'femenino');
-            reg.total.total = currData.map(r => { return r.total; }).reduce((a, b) => { return a + b; });
+            reg.total.total = currData.map(r => { return r.total ; }).reduce((a, b) => { return a + b; });
         }
 
         res.push(reg);
@@ -293,7 +295,7 @@ function sumar(currData, sexo, edad) {
 
 function sumarTotal(currData, sexo) {
     let cantidad = currData.filter(r => r.sexo === sexo);
-    return cantidad.length > 0 ? cantidad.map(r => { return r.total; }).reduce((a, b) => { return a + b; }) : 0;
+    return cantidad.length > 0 ? cantidad.map(r => { return r.total ; }).reduce((a, b) => { return a + b; }) : 0;
 }
 
 export async function getPlanillaC1(params: any) {
