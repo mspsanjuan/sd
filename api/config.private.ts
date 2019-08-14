@@ -40,23 +40,23 @@ export const ports = {
 export const hosts = {
     main: getEnv('MAIN_HOST', 'http://localhost:3002'),
     ldap: getEnv('LDAP_HOST', 'ldap.neuquen.gov.ar'),
-    elastic_main: getEnv('ELASTIC_HOST', '10.64.65.200:9200'),
+    elastic_main: getEnv('ELASTIC_HOST', 'http://10.68.2.30:9200'),
     mongoDB_main: {
-        host: getEnv('MONGO_MAIN', 'mongodb://10.64.65.200:27018/andes'), // ?authSource=admin
+        host: getEnv('MONGO_MAIN', 'mongodb://10.68.2.30:27018/andes'), // ?authSource=admin
         options: {
             reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
             reconnectInterval: 500,
         }
     },
     mongoDB_mpi: {
-        host: getEnv('MONGO_MPI', 'mongodb://10.64.65.200:27018/mpi'), // ?authSource=admin
+        host: getEnv('MONGO_MPI', 'mongodb://10.68.2.30:27018/mpi'), // ?authSource=admin
         options: {
             reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
             reconnectInterval: 500,
         }
     },
     mongoDB_snomed: {
-        host: getEnv('MONGO_SNOMED', 'mongodb://10.64.65.200:27018/es-edition'), // ?authSource=admin
+        host: getEnv('MONGO_SNOMED', 'mongodb://10.68.2.30:27018/es-edition'), // ?authSource=admin
         options: {
             reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
             reconnectInterval: 500,
@@ -64,7 +64,7 @@ export const hosts = {
     },
 
     mongoDB_puco: {
-        host: getEnv('MONGO_PUCO', 'mongodb://10.64.65.200:27018/padrones'),
+        host: getEnv('MONGO_PUCO', 'mongodb://10.68.2.30:27018/padrones'),
         options: {
             reconnectTries: Number.MAX_VALUE, // Never stop trying to reconnect
             reconnectInterval: 1500,
@@ -299,7 +299,7 @@ export const emailListString = '';
 
 export const logDatabase = {
     log: {
-        host: getEnv('MONGO_LOGS', `mongodb://10.64.65.200:27018/andesLogs`),
+        host: getEnv('MONGO_LOGS', `mongodb://10.68.2.30:27018/andesLogs`),
         options: {
             reconnectTries: Number.MAX_VALUE,
             reconnectInterval: 1500,
