@@ -59,3 +59,7 @@ typings/
 
 # next.js build output
 .next
+
+#Archivos de configuración
+api/config.private.ts
+api/package-lock.json
