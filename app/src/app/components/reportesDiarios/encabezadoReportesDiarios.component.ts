@@ -17,6 +17,7 @@ export class EncabezadoReportesDiariosComponent implements OnInit {
     @HostBinding('class.plex-layout') layout = true; // Permite el uso de flex-box en el componente
 
     // Variables comunes a varios reportes
+    public showBotonExportaXLS = false;
     public showBotonImprimir = false;
     public opcionesOrganizacion: any = [];
     public opcionesReportes: { id: number, nombre: string }[] = [];
@@ -126,6 +127,7 @@ export class EncabezadoReportesDiariosComponent implements OnInit {
         this.showPlanillaC1 = false;
         this.showResumenDiarioMensual = false;
         this.showBotonImprimir = false;
+        this.showBotonExportaXLS = false;
     }
 
 
@@ -201,6 +203,7 @@ export class EncabezadoReportesDiariosComponent implements OnInit {
                 this.showPlanillaC1 = false;
                 this.showResumenDiarioMensual = true;
                 this.showBotonImprimir = true;
+                this.showBotonExportaXLS = true;
             });
         }
 
@@ -211,6 +214,7 @@ export class EncabezadoReportesDiariosComponent implements OnInit {
                 this.showResumenDiarioMensual = false;
                 this.showPlanillaC1 = true;
                 this.showBotonImprimir = true;
+                this.showBotonExportaXLS = true;
             });
         }
     }
@@ -242,6 +246,21 @@ export class EncabezadoReportesDiariosComponent implements OnInit {
         WindowPrt.focus();
         WindowPrt.print();
         WindowPrt.close();
+    }
+
+    public toExcel(cmpName) {
+
+        // creating a temporary HTML link element (they support setting file names)
+        let a = document.createElement('a');
+        // getting data from our div that contains the HTML table
+        let data_type = 'data:text/csv;charset=utf-8,%EF%BB%BF';
+        let table_div = document.getElementById(cmpName);
+        let table_html = table_div.outerHTML.replace(/ /g, '%20');
+        a.href = data_type  + table_html;
+        // setting the file name
+        a.download = 'reporte.xls';
+        a.click();
+
     }
 
 }
