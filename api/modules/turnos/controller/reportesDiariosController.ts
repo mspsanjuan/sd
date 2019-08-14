@@ -56,6 +56,7 @@ export async function getResumenDiarioMensual(params: any) {
             $project: {
                 _id: 0,
                 fecha: '$horaInicio',
+                dia: { $dayOfMonth: '$horaInicio' },
                 turnoEstado: '$bloques.turnos.estado',
                 pacienteSexo: '$bloques.turnos.paciente.sexo',
                 pacienteEdad: {
@@ -76,7 +77,7 @@ export async function getResumenDiarioMensual(params: any) {
         {
             $group: {
                 _id: {
-                    fecha: '$fecha',
+                    dia: '$dia',
                     sexo: '$pacienteSexo',
                     edad: {
                         $switch: {
@@ -144,14 +145,15 @@ export async function getResumenDiarioMensual(params: any) {
                         }
                     }
                 },
-                total: { $sum: 1 }
+                total: { $sum: 1 },
+                fecha: {$first: '$fecha'},
             }
         },
         {
             $project: {
                 _id: 0,
-                fechaISO:  '$_id.fecha',
-                fecha: { $dateToString: { format: '%d-%m-%G', date: '$_id.fecha' } },
+                fechaISO:  '$fecha',
+                fecha: { $dateToString: { format: '%d-%m-%G', date: '$fecha' } },
                 sexo: '$_id.sexo',
                 edad: '$_id.edad',
                 total: '$total'
@@ -216,6 +218,7 @@ function formatData(data: any, anio: number, mes: number) {
             reg.total.f = sumarTotal(currData, 'femenino');
             reg.total.total = currData.map(r => { return r.total; }).reduce((a, b) => { return a + b; });
         }
+
         res.push(reg);
     }
 
