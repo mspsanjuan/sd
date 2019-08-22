@@ -36,44 +36,101 @@ export async function getResumenDiarioMensual(params: any) {
             }
         },
         {
-            $unwind: {
-                path: '$bloques'
-            },
-        },
-        {
-            $unwind: {
-                path: '$bloques.turnos',
-
-            }
-
-        },
-        {
-            $match: {
-                'bloques.turnos.estado': 'asignado',
-                'bloques.turnos.asistencia': 'asistio',
-
+            $facet: {
+                turnos:
+                [
+                    {
+                        $unwind: {
+                            path: '$bloques'
+                        },
+                    },
+                    {
+                        $unwind: {
+                            path: '$bloques.turnos',
+                        }
+                    },
+                    {
+                        $match: {
+                            'bloques.turnos.estado': 'asignado',
+                            'bloques.turnos.asistencia': 'asistio',
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            fecha: '$horaInicio',
+                            dia: { $dayOfMonth: '$horaInicio' },
+                            turnoEstado: '$bloques.turnos.estado',
+                            pacienteSexo: '$bloques.turnos.paciente.sexo',
+                            pacienteEdad: {
+                                $trunc: {
+                                    $divide: [
+                                        {
+                                            $subtract: [
+                                                '$horaInicio',
+                                                '$bloques.turnos.paciente.fechaNacimiento'
+                                            ]
+                                        },
+                                        86400000
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                ],
+                sobreturnos:
+                [
+                    {
+                        $unwind: {
+                            path: '$sobreturnos'
+                        }
+                    },
+                    {
+                        $match: {
+                            'sobreturnos.estado': 'asignado',
+                            'sobreturnos.asistencia': 'asistio',
+                        }
+                    },
+                    {
+                        $project: {
+                            _id: 0,
+                            fecha: '$horaInicio',
+                            dia: { $dayOfMonth: '$horaInicio' },
+                            turnoEstado: '$sobreturnos.estado',
+                            pacienteSexo: '$sobreturnos.paciente.sexo',
+                            pacienteEdad: {
+                                $trunc: {
+                                    $divide: [
+                                        {
+                                            $subtract: [
+                                                '$horaInicio',
+                                                '$sobreturnos.paciente.fechaNacimiento'
+                                            ]
+                                        },
+                                        86400000
+                                    ]
+                                }
+                            }
+                        }
+                    },
+                ]
             }
         },
         {
             $project: {
-                _id: 0,
-                fecha: '$horaInicio',
-                dia: { $dayOfMonth: '$horaInicio' },
-                turnoEstado: '$bloques.turnos.estado',
-                pacienteSexo: '$bloques.turnos.paciente.sexo',
-                pacienteEdad: {
-                    $trunc: {
-                        $divide: [
-                            {
-                                $subtract: [
-                                    '$horaInicio',
-                                    '$bloques.turnos.paciente.fechaNacimiento'
-                                ]
-                            },
-                            86400000
-                        ]
-                    }
+                t: {
+                    $concatArrays: ['$turnos', '$sobreturnos']
                 }
+            }
+        },
+        {
+            $unwind: {
+                path: '$t'
+            }
+        },
+        {
+            $replaceRoot: {
+                newRoot: '$t'
             }
         },
         {
