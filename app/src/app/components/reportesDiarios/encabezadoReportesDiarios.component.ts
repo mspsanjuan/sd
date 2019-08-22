@@ -8,6 +8,8 @@ import { AgendaService } from '../../services/turnos/agenda.service';
 import { TipoPrestacionService } from '../../services/tipoPrestacion.service';
 import { getObjMeses } from '../../../app/utils/enumerados';
 
+import {ExcelService} from '../../services/excel.service';
+
 @Component({
     selector: 'encabezadoReportesDiarios',
     templateUrl: 'encabezadoReportesDiarios.html',
@@ -50,7 +52,8 @@ export class EncabezadoReportesDiariosComponent implements OnInit {
         private agendaService: AgendaService,
         private auth: Auth,
         private servicioOrganizacion: OrganizacionService,
-        private servicioPrestacion: TipoPrestacionService
+        private servicioPrestacion: TipoPrestacionService,
+        private excelService: ExcelService
     ) {
 
     }
@@ -250,16 +253,9 @@ export class EncabezadoReportesDiariosComponent implements OnInit {
 
     public toExcel(cmpName) {
 
-        // creating a temporary HTML link element (they support setting file names)
-        let a = document.createElement('a');
-        // getting data from our div that contains the HTML table
-        let data_type = 'data:text/csv;charset=utf-8,%EF%BB%BF';
-        let table_div = document.getElementById(cmpName);
-        let table_html = table_div.outerHTML.replace(/ /g, '%20');
-        a.href = data_type  + table_html;
-        // setting the file name
-        a.download = 'reporte.xls';
-        a.click();
+        let table: any;
+        table = document.getElementById(cmpName);
+        this.excelService.exportAsExcelFile(table, 'reportesDiarios');
 
     }
 

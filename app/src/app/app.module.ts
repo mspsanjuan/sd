@@ -22,6 +22,8 @@ import { HttpClientModule } from '@angular/common/http';
 import { HttpModule } from '@angular/http';
 import { ScrollingModule } from '@angular/cdk/scrolling';
 
+import {ExcelService} from '../app/services/excel.service';
+
 // Global
 import { PlexModule } from '@andes/plex';
 import { Plex } from '@andes/plex';
@@ -668,6 +670,7 @@ registerLocaleData(localeEs, 'es');
             provide: LOCALE_ID,
             useValue: 'es-AR'
         },
+        ExcelService,
         Plex,
         Server,
         Auth,
