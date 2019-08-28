@@ -72,7 +72,9 @@
         </header>
         <!-- Resultados -->
         <plex-loader *ngIf="loading"></plex-loader>
-        <table id="tbl" *ngIf="busquedas?.length && !loading" class="table table-striped table-sm">
+
+        <table id="tbl" *ngIf="busquedas?.length && !loading" class="table table-striped table-bordered">
+            <thead style="background-color: darkgray;">
             <tr>
                 <th>Fecha</th>
                 <th>Paciente</th>
@@ -82,12 +84,13 @@
                 <th width="20%" *ngIf="!sumarB">Financiador</th>
                 <th *ngIf="sumarB">Comprobante</th>
             </tr>
+            </thead>
             <tbody>
                 <tr *ngFor="let busqueda of busquedas; let i=index" class="hover" (click)="mostrarPrestacion(busqueda)"
                     [ngClass]="{'bg-inverse text-white': busqueda.seleccionada}">
-                    <td>{{busqueda.fecha | date: "dd/MM/yyyy HH:mm " }}</td>
-                    <td>{{busqueda.paciente | paciente}}</td>
-                    <td>{{busqueda.prestacion?.term}}</td>
+                    <td style="font-weight: normal;">{{busqueda.fecha | date: "dd/MM/yyyy HH:mm " }}</td>
+                    <td style="font-weight: normal;">{{busqueda.paciente | paciente}}</td>
+                    <td style="font-weight: normal;">{{busqueda.prestacion?.term}}</td>
                     <td class="nombres-profesionales">
                         <span *ngIf="busqueda.profesionales?.length == 0" class="text-danger">Profesional
                             no asignado</span>
@@ -96,23 +99,27 @@
                                 enumerar:['apellido','nombre'] }}</div>
                         </ng-container>
                     </td>
-                    <td>{{busqueda.estado}}</td>
-                    <td *ngIf="!sumarB">{{busqueda.financiador ? busqueda.financiador.financiador : 'No posee'}}</td>
-                    <td *ngIf="sumarB">
+                    <td style="font-weight: normal;">{{busqueda.estado}}</td>
+                    <td style="font-weight: normal;" *ngIf="!sumarB">{{busqueda.financiador ? busqueda.financiador.financiador : 'No posee'}}</td>
+                    <td style="font-weight: normal;" *ngIf="sumarB">
                         {{busqueda.estadoFacturacion? busqueda.estadoFacturacion?.estado: 'Sin Comprobante'}}</td>
                 </tr>
             </tbody>
         </table>
 
+
+        </plex-layout-main>
+
+        <plex-layout-footer>
         <!--
         Boton Exportar a XLS
         -->
-        <plex-button *ngIf="busquedas?.length" position="right" type="default" label="Exportar a XLS" (click)="toExcel('tbl')"></plex-button>
-
+        <plex-button *ngIf="busquedas?.length" position="right" type="default" label="Exportar a XLS" (click)="toExcel()"></plex-button>
+        </plex-layout-footer>
        
         
 
-    </plex-layout-main>
+
     <!-- Prestacion -->
     <plex-layout-sidebar *ngIf="showPrestacion">
         <header>
