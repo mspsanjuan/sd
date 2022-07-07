@@ -50,7 +50,7 @@
     "ldapjs": "^1.0.1",
     "libxmljs": "^0.19.3",
     "mime-db": "^1.29.0",
-    "moment": "^2.19.3",
+    "moment": "^2.29.4",
     "mongoose": "^5.4.14",
     "mongoose-gridfs": "^0.3.2",
     "mssql": "^4.1.0",
